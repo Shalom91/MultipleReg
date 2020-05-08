@@ -17,7 +17,7 @@ class ErrorCalculator:
         max_resid = round(max(residuals), 2)
         mean_resid = round(mean(residuals), 2)
         
-        return '{} {} {} {} {} {}'.format('MIN_resid: ', min_resid, 'MAX_resid: ', max_resid, 
+        return '{} {} {} {} {} {} {}'.format('RESIDUALS-->', 'MIN_resid: ', min_resid, 'MAX_resid: ', max_resid, 
                                           'MEAN_resid: ', mean_resid)
     
     def get_standardised_residuals(self):
@@ -29,22 +29,22 @@ class ErrorCalculator:
         max_std_resid = round(max(standardised_resid), 2)
         mean_std_resid = round(mean(standardised_resid), 2)
         
-        return '{} {} {} {} {} {}'.format('MIN_std_resid: ', min_std_resid, 'MAX_std_resid: ', max_std_resid, 
-                                          'MEAN_std_resid: ', mean_std_resid)
+        return '{} {} {} {} {} {} {}'.format('STD RESIDUALS-->', 'MIN_std_resid:', min_std_resid, 'MAX_std_resid:', max_std_resid, 
+                                          'MEAN_std_resid:', mean_std_resid)
     
     def get_mse(self):
         mse = round(metrics.mean_squared_error(self.train_target, self.train_prediction), 2)
         mse_test = round(metrics.mean_squared_error(self.test_target, self.test_prediction), 2)
-        return '{} {} {} {}'.format('MSE_train: ', mse, 'MSE_test: ', mse_test)
+        return '{} {} {} {} {}'.format('MSE-->', 'MSE_train:', mse, 'MSE_test:', mse_test)
     
     def get_rmse(self):
         mse = round(metrics.mean_squared_error(self.train_target, self.train_prediction), 2)
         mse_test = round(metrics.mean_squared_error(self.test_target, self.test_prediction), 2)
         rmse = round(np.sqrt(mse), 2)
         rmse_test = round(np.sqrt(mse_test), 2)
-        return '{} {} {} {}'.format('RMSE_train: ', rmse, 'RMSE_test: ', rmse_test)
+        return '{} {} {} {} {}'.format('RMSE-->', 'RMSE_train:', rmse, 'RMSE_test:', rmse_test)
     
     def error_summary(self):
-        return '{}\n {}\n {}\n {}'.format(ErrorCalculator.get_residuals(self), 
+        return '{}\n \n{}\n \n{}\n \n{}'.format(ErrorCalculator.get_residuals(self), 
                                           ErrorCalculator.get_standardised_residuals(self), 
                                           ErrorCalculator.get_mse(self), ErrorCalculator.get_rmse(self))
