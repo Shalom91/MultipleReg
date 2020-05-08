@@ -3,33 +3,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 
-
 class Plotter:
+    
     def __init__(self, train_target, train_prediction, model):
         self.train_target = train_target
         self.train_prediction = train_prediction
         self.model = model
-        
-    def plot_hist(self):
+
+    def plot(self):
         residuals = self.model.resid
-        resid_std = np.std(residuals)
-        standardised_resid = residuals/resid_std
-        
-        plt.subplot(121)
         _ = plt.hist(residuals)
-        _ = plt.title("Residuals Histogram", pad=10)
-        _ = plt.xlabel("Residuals") 
-        
-        
-        plt.subplot(122)
-        plt.subplots_adjust(wspace=1)
-        _ = plt.hist(standardised_resid)
-        _  = plt.title("STD Residuals Histogram", pad=10)
-        _ = plt.xlabel("Standardised Residuals") 
-        
-        
-        plt.tight_layout()
-        plt.show()
+        _ = plt.title("Residuals Histogram")
+        _ = plt.xlabel("Residuals")
+        return plt.show()
+
+class HistogramPlotter(Plotter):
+    pass
+
 
 class ScatterPlotter(Plotter):
     
@@ -37,8 +27,10 @@ class ScatterPlotter(Plotter):
         Plotter.__init__(self, train_target, train_prediction, model)
         self.dataset = dataset
     
-    def resid_fitted_scatter(self):
+    def plot(self):
         residuals = self.model.resid
+        
+        #Residuals vs Predicted Values
         plt.subplot(211)
         sns.residplot(self.train_prediction, residuals, lowess=True, data=self.dataset, 
              scatter_kws={'alpha':0.5},
@@ -48,6 +40,7 @@ class ScatterPlotter(Plotter):
         _ = plt.ylabel("Residuals")
         plt.show()
         
+        #Predicted Values vs Observed Values
         plt.subplot(212)
         sns.residplot(self.train_prediction, self.train_target, lowess=True, data=self.dataset, 
              scatter_kws={'alpha':0.5},
